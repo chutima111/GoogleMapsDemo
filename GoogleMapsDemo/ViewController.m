@@ -144,18 +144,31 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
+    [self.searchBar resignFirstResponder];
+    
+    // Remove all the markers
+    [self.mapView_ clear];
+    
     // Start to search here
     [self placeAutoComplete];
+    
+    
 }
 
 -(void)placeAutoComplete {
     
+    // Use GMSAutocompleteFilter to find the location
     GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc]init];
     filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
     
+    // Set the size of the bounds for search, set the bound
     GMSVisibleRegion visibleRegion = self.mapView_.projection.visibleRegion;
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:visibleRegion.farLeft
                                                                        coordinate:visibleRegion.nearRight];
+    
+    // When the search is done, it will excute the call back
+    // All the locations will be in results Array as a GMSAutocompletePrediction which is give the whole string of location information
+    
     [_placeClient autocompleteQuery:self.searchBar.text
                              bounds:bounds
                              filter:filter
@@ -164,10 +177,22 @@
                                    NSLog(@"Autocomplete error %@", error.localizedDescription);
                                    return ;
                                } else {
+                    
                                    for (GMSAutocompletePrediction *result in results) {
+                                       
+    // I need to convert GMSAutocompletePrediction result into GMSPlace to get the location info to make a marker
                                        [_placeClient lookUpPlaceID:result.placeID
                                                                             callback:^(GMSPlace * _Nullable result, NSError * _Nullable error) {
                                            NSLog(@"name = %@, lat = %f, long = %f, website = %@", result.name, result.coordinate.latitude, result.coordinate.longitude, result.website);
+                                                                                
+    // Add new markers here
+    GMSMarker *marker = [[GMSMarker alloc]init];
+    marker.position = CLLocationCoordinate2DMake(result.coordinate.latitude, result.coordinate.longitude);
+    marker.title = result.name;
+    marker.userData = [result.website absoluteString];
+    marker.map = self.mapView_;
+    marker.infoWindowAnchor = CGPointMake(0.5, -0.25);
+                                                                                
                                        }];
                                        
                                    }
