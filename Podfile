@@ -8,6 +8,7 @@ target 'GoogleMapsDemo' do
   # Pods for GoogleMapsDemo
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'GoogleMaps'  
-  pod 'GooglePlaces'  
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'  
 
 end

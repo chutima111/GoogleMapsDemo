@@ -10,10 +10,14 @@
 #import "MyCustomMarker.h"
 #import "MyWebViewViewController.h"
 @import GoogleMaps;
+@import GooglePlaces;
 
-@interface ViewController () <GMSMapViewDelegate>
+@interface ViewController () <GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView_;
+@property (nonatomic,strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) NSString *imageName;
+@property (nonatomic, strong) GMSPlacesClient *placeClient;
 
 @end
 
@@ -22,14 +26,51 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
-                                                        longitude:151.20
-                                                                 zoom:12.5];
+    _placeClient = [[GMSPlacesClient alloc]init];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.741316
+                                                        longitude:-73.989980
+                                                                 zoom:13.5];
+    
+    self.locationManager = [[CLLocationManager alloc]init];
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager setDelegate:self];
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManager startUpdatingLocation];
+    
     self.mapView_.myLocationEnabled = YES;
     self.mapView_.camera = camera;
     self.mapView_.delegate = self;
     
-    GMSMarker *marker = [[GMSMarker alloc] init];
+    NSLog(@"my location: %@", _mapView_.myLocation);
+    
+    
+    GMSMarker *marker = [[GMSMarker alloc]init];
+    marker.position = CLLocationCoordinate2DMake(40.741426, -73.990136);
+    marker.title = @"Turn To Tech";
+    marker.userData = @"http://turntotech.io/";
+    marker.map = self.mapView_;
+    marker.infoWindowAnchor = CGPointMake(0.5, -0.25);
+    
+    GMSMarker *marker1 = [[GMSMarker alloc]init];
+    marker1.position = CLLocationCoordinate2DMake(40.741362, -73.988290);
+    marker1.title = @"Shake Shack";
+    marker1.userData = @"https://www.shakeshack.com/";
+    marker1.map = self.mapView_;
+    marker1.infoWindowAnchor = CGPointMake(0.5, -0.25);
+    
+    GMSMarker *marker2 = [[GMSMarker alloc]init];
+    marker2.position = CLLocationCoordinate2DMake(40.740523, -73.990855);
+    marker2.title = @"KatAndTheo";
+    marker2.userData = @"http://katandtheo.com/";
+    marker2.map = self.mapView_;
+    marker2.infoWindowAnchor = CGPointMake(0.5, -0.25);
+    
+    [self.searchBar setDelegate:self];
+    
+   
+    
+/*    GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
     marker.title = @"Sydney";
     marker.snippet = @"Australia";
@@ -49,6 +90,7 @@
     marker3.snippet = @"Animals!";
     marker3.map = self.mapView_;
     marker3.infoWindowAnchor = CGPointMake(0.5, -0.25);
+ */
 
     
 }
@@ -80,7 +122,8 @@
     
     infoWindow.title.text = marker.title;
     infoWindow.detail.text = marker.snippet;
-    infoWindow.image.image = [UIImage imageNamed:@"australia"];
+    infoWindow.image.image = [UIImage imageNamed:marker.title];
+    infoWindow.urlString = marker.userData;
     
     return infoWindow;
 }
@@ -88,10 +131,51 @@
 -(void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
     
     MyWebViewViewController * myWebView = [[MyWebViewViewController alloc]init];
+    myWebView.urlString = marker.userData;
     
     [self presentViewController:myWebView animated:YES completion:nil];
     
    
 }
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.text = @"";
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    // Start to search here
+    [self placeAutoComplete];
+}
+
+-(void)placeAutoComplete {
+    
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc]init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+    
+    GMSVisibleRegion visibleRegion = self.mapView_.projection.visibleRegion;
+    GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:visibleRegion.farLeft
+                                                                       coordinate:visibleRegion.nearRight];
+    [_placeClient autocompleteQuery:self.searchBar.text
+                             bounds:bounds
+                             filter:filter
+                           callback:^(NSArray *results, NSError *error) {
+                               if (error != nil) {
+                                   NSLog(@"Autocomplete error %@", error.localizedDescription);
+                                   return ;
+                               } else {
+                                   for (GMSAutocompletePrediction *result in results) {
+                                       [_placeClient lookUpPlaceID:result.placeID
+                                                                            callback:^(GMSPlace * _Nullable result, NSError * _Nullable error) {
+                                           NSLog(@"name = %@, lat = %f, long = %f, website = %@", result.name, result.coordinate.latitude, result.coordinate.longitude, result.website);
+                                       }];
+                                       
+                                   }
+                               }
+    }];
+   
+    
+}
+
 
 @end

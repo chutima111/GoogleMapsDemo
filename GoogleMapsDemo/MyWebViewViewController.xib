@@ -17,10 +17,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-kV-ziK">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                </webView>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSb-wu-Q7G">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <items>
@@ -41,6 +37,10 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-kV-ziK">
+                    <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -51,11 +51,13 @@
                 <constraint firstItem="nSb-wu-Q7G" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Bqe-Tc-KnT"/>
                 <constraint firstItem="nSb-wu-Q7G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OnZ-l4-rcZ"/>
                 <constraint firstAttribute="bottom" secondItem="lgB-kV-ziK" secondAttribute="bottom" id="UgU-Fj-xW9"/>
+                <constraint firstItem="lgB-kV-ziK" firstAttribute="top" secondItem="nSb-wu-Q7G" secondAttribute="bottom" id="mCg-q4-5ox"/>
                 <constraint firstAttribute="trailing" secondItem="lgB-kV-ziK" secondAttribute="trailing" id="otJ-WT-hXw"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="Bqe-Tc-KnT"/>
+                    <exclude reference="4Xb-lm-8EN"/>
                 </mask>
             </variation>
         </view>

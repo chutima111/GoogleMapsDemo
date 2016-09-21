@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *detail;
 
+@property (weak, nonatomic) NSString *urlString;
+
 @end
