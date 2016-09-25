@@ -163,6 +163,8 @@
 -(void)searchLocations
 {
     NSString *searchText = self.searchBar.text;
+  
+    
     //SAMPLE URL
     //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&name=cruise&key=AIzaSyDKX0p74aoKzjOplh_bx_lXhOyV0lPj_Zk
     
@@ -211,23 +213,26 @@
                 // Get the location name
                 NSString *locationName = [locationsDict objectForKey:@"name"];
                 
-                // Get the photo reference
-                NSArray *photoArray = [locationsDict objectForKey:@"photos"];
-                NSDictionary *photoDict = [photoArray objectAtIndex:0];
-                NSString *photoRefString = [photoDict objectForKey:@"photo_reference"];
-                
-                [self getAndSavePhoto:photoRefString photoName:locationName withCompletionHandler:^(UIImage *resultImage) {
-                    // Get the location type
-                    NSArray *locationTypeArray = [locationsDict objectForKey:@"types"];
-                    NSString *locaitonType = locationTypeArray[0];
+                // Get the location ID
+                NSString *locationID = [locationsDict objectForKey:@"place_id"];
+                [self placeIdSearch:locationID withCompletionHandler:^(NSString *websiteString) {
+                    // Get the photo reference
+                    NSArray *photoArray = [locationsDict objectForKey:@"photos"];
+                    NSDictionary *photoDict = [photoArray objectAtIndex:0];
+                    NSString *photoRefString = [photoDict objectForKey:@"photo_reference"];
                     
-                    // Add marker for search location
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    [self getAndSavePhoto:photoRefString photoName:locationName withCompletionHandler:^(UIImage *resultImage) {
+                        // Get the location type
+                        NSArray *locationTypeArray = [locationsDict objectForKey:@"types"];
+                        NSString *locaitonType = locationTypeArray[0];
                         
-                        [self makeMarker:locationName setLatitude:[locationLat doubleValue] setLongitude:[locationLong doubleValue] locationType:locaitonType locationPhoto:resultImage locationWebSite:nil];
-                    });
+                        // Add marker for search location
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            
+                            [self makeMarker:locationName setLatitude:[locationLat doubleValue] setLongitude:[locationLong doubleValue] locationType:locaitonType locationPhoto:resultImage locationWebSite:websiteString];
+                        });
+                    }];
                 }];
-                
             }
         }
             
@@ -360,6 +365,37 @@
         return jsonDict;
         
     }
+}
+
+-(void)placeIdSearch:(NSString *)placeID withCompletionHandler:(void (^)(NSString *websiteString))completionHandler
+{
+    NSString *firstUrlString = @"https://maps.googleapis.com/maps/api/place/details/json?placeid=";
+    NSString *googleApiKey = @"&key=AIzaSyDKX0p74aoKzjOplh_bx_lXhOyV0lPj_Zk";
+    NSString *completeUrlString = [NSString stringWithFormat:@"%@%@%@", firstUrlString, placeID, googleApiKey];
+    
+    NSURL *url = [NSURL URLWithString:completeUrlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData *data,NSURLResponse *response,NSError *error)
+      {
+          NSLog(@"Download place id is done");
+          
+          NSDictionary *dataDict = [self convertJsonDataToDictionary:data];
+          NSDictionary *resultsDict = [dataDict objectForKey:@"result"];
+          
+          if (resultsDict != nil) {
+          NSString *website = [resultsDict objectForKey:@"website"];
+              
+              completionHandler(website);
+        
+          }
+          else {
+              NSLog(@"Error: %@", error.localizedDescription);
+          }
+      }] resume];
+
+    
 }
                                      
                                      
