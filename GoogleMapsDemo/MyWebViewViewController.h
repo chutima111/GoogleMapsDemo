@@ -12,6 +12,9 @@
 
 @property (nonatomic, strong) NSString *urlString;
 
+
+@property (weak, nonatomic) IBOutlet UINavigationBar *myNavBar;
+@property (weak, nonatomic) IBOutlet UIImageView *myEmptyImage;
 @property (weak, nonatomic) IBOutlet UIWebView *myWebView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *myNavigationBar;
 - (IBAction)btnBackPressed:(id)sender;

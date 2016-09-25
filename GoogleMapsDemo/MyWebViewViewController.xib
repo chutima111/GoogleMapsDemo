@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyWebViewViewController">
             <connections>
+                <outlet property="myEmptyImage" destination="ycO-VR-EIf" id="2e5-pv-CJz"/>
+                <outlet property="myNavBar" destination="nSb-wu-Q7G" id="Gih-iQ-YiJ"/>
                 <outlet property="myNavigationBar" destination="nSb-wu-Q7G" id="emw-Ty-mCE"/>
                 <outlet property="myWebView" destination="lgB-kV-ziK" id="amb-YK-rxD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -17,10 +19,17 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-image-icon" translatesAutoresizingMaskIntoConstraints="NO" id="ycO-VR-EIf">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-kV-ziK">
+                    <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                </webView>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSb-wu-Q7G">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <items>
-                        <navigationItem title="My Maps" id="Een-gp-2Yp">
+                        <navigationItem title="Web site" id="Een-gp-2Yp">
                             <barButtonItem key="leftBarButtonItem" title="Back" style="plain" id="ayM-7V-mOO">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DUc-km-KsG">
                                     <rect key="frame" x="20" y="7" width="50" height="30"/>
@@ -37,10 +46,6 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-kV-ziK">
-                    <rect key="frame" x="0.0" y="44" width="600" height="556"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -49,8 +54,12 @@
                 <constraint firstItem="lgB-kV-ziK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4px-89-ofg"/>
                 <constraint firstAttribute="trailing" secondItem="nSb-wu-Q7G" secondAttribute="trailing" id="7oZ-Rb-5DN"/>
                 <constraint firstItem="nSb-wu-Q7G" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Bqe-Tc-KnT"/>
+                <constraint firstItem="ycO-VR-EIf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="LRA-WN-Gdx"/>
                 <constraint firstItem="nSb-wu-Q7G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OnZ-l4-rcZ"/>
+                <constraint firstAttribute="trailing" secondItem="ycO-VR-EIf" secondAttribute="trailing" id="TDW-4j-XUu"/>
                 <constraint firstAttribute="bottom" secondItem="lgB-kV-ziK" secondAttribute="bottom" id="UgU-Fj-xW9"/>
+                <constraint firstItem="ycO-VR-EIf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b5M-ah-WcW"/>
+                <constraint firstAttribute="bottom" secondItem="ycO-VR-EIf" secondAttribute="bottom" id="fje-P2-NDq"/>
                 <constraint firstItem="lgB-kV-ziK" firstAttribute="top" secondItem="nSb-wu-Q7G" secondAttribute="bottom" id="mCg-q4-5ox"/>
                 <constraint firstAttribute="trailing" secondItem="lgB-kV-ziK" secondAttribute="trailing" id="otJ-WT-hXw"/>
             </constraints>
@@ -62,4 +71,7 @@
             </variation>
         </view>
     </objects>
+    <resources>
+        <image name="no-image-icon" width="150" height="150"/>
+    </resources>
 </document>

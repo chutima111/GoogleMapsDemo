@@ -16,8 +16,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
     
     NSString *urlString = self.urlString;
+    
+    if (urlString == nil) {
+        [_myWebView addSubview:_myEmptyImage];
+    
+    }
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];

@@ -11,21 +11,21 @@
             <rect key="frame" x="0.0" y="0.0" width="250" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gnw-ee-aT3">
-                    <rect key="frame" x="8" y="8" width="84" height="84"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gnw-ee-aT3">
+                    <rect key="frame" x="8" y="8" width="70" height="84"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="84" id="9AL-5c-TNJ"/>
+                        <constraint firstAttribute="width" constant="70" id="9AL-5c-TNJ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Big Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8p3-zi-wRy">
-                    <rect key="frame" x="100" y="8" width="83" height="26"/>
-                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Big Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8p3-zi-wRy">
+                    <rect key="frame" x="86" y="25" width="164" height="18"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Little text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fph-ri-lIO">
-                    <rect key="frame" x="100" y="42" width="72" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="86" y="51" width="62" height="18"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -38,7 +38,8 @@
                 <constraint firstItem="Fph-ri-lIO" firstAttribute="top" secondItem="8p3-zi-wRy" secondAttribute="bottom" constant="8" id="7JG-TE-OWn"/>
                 <constraint firstItem="Fph-ri-lIO" firstAttribute="leading" secondItem="gnw-ee-aT3" secondAttribute="trailing" constant="8" id="8SS-AQ-mbb"/>
                 <constraint firstItem="gnw-ee-aT3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="T4h-Hq-0Li"/>
-                <constraint firstItem="8p3-zi-wRy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="dmz-e1-ZYU"/>
+                <constraint firstItem="8p3-zi-wRy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="dmz-e1-ZYU"/>
+                <constraint firstAttribute="trailing" secondItem="8p3-zi-wRy" secondAttribute="trailing" id="z3B-Sg-FfU"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -52,7 +53,7 @@
                 <outlet property="image" destination="gnw-ee-aT3" id="McT-53-wuk"/>
                 <outlet property="title" destination="8p3-zi-wRy" id="eIy-UZ-b4Q"/>
             </connections>
-            <point key="canvasLocation" x="21" y="-86"/>
+            <point key="canvasLocation" x="94" y="-94"/>
         </view>
     </objects>
 </document>
